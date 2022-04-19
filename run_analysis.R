@@ -40,9 +40,43 @@ colnames(df_subject_test) <- "Subject"
 colnames(df_activity_train) <- "Activity"
 colnames(df_activity_test) <- "Activity"
 
-# merge the dataframes
+# part 1:
+# Merges the training and the test sets to create one data set.
 df <- rbind(df_features_train, df_features_test)
-df$activity <- factor(rbind(df_activity_train, df_activity_test)$Activity)
-df$subject <- factor(rbind(df_subject_train, df_subject_test)$Subject)
+
+# part 2:
+# Extracts only the measurements on the mean and standard deviation for each measurement. 
+
+df_names <- names(df)
+indices_mean <- grep(pattern = "mean\\(\\)", x = df_names)
+indices_std <- grep(pattern = "std\\(\\)", x = df_names)
+
+df <- df[, c(indices_mean, indices_std)]
+
+# part 3:
+# Uses descriptive activity names to name the activities in the data set.
+# And Also I added subjects as well.
+df$Activity <- factor(rbind(df_activity_train, df_activity_test)$Activity)
+df$Subject <- factor(rbind(df_subject_train, df_subject_test)$Subject)
 
 levels(df$activity) <- activities
+
+# part 4:
+# Appropriately labels the data set with descriptive variable names.
+df_names <- names(df)
+df_names <- gsub(pattern = "^t", replacement = "Time", x = df_names)
+df_names <- gsub(pattern = "^f", replacement = "Frequency", x = df_names)
+df_names <- gsub(pattern = "Acc", replacement = "Accelerometer", df_names)
+df_names <- gsub(pattern = "Gyro", replacement = "Gyroscope", df_names)
+df_names <- gsub(pattern = "Mag", replacement = "Magnitude", df_names)
+df_names <- gsub(pattern = "BodyBody", replacement = "Body", df_names)
+
+names(df) <- df_names
+
+# part 5:
+# From the data set in step 4, creates a second, independent tidy data set with
+# the average of each variable for each activity and each subject.
+library(plyr)
+df_clean <- aggregate(. ~Subject + Activity, df, mean)
+df_clean <- df_clean[order(df_clean$Subject, df_clean$Activity), ]
+write.table(df_clean, file = "tidydata.txt", row.name = FALSE)
