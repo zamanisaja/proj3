@@ -61,6 +61,8 @@ df$Subject <- factor(rbind(df_subject_train, df_subject_test)$Subject)
 
 levels(df$activity) <- activities
 
+df <- na.omit(df)
+
 # part 4:
 # Appropriately labels the data set with descriptive variable names.
 df_names <- names(df)
