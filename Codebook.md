@@ -1,8 +1,3 @@
-## Getting and Cleaning Data
-Codes for solving the final project for the course: [Getting and cleaning data](https://www.coursera.org/learn/data-cleaning).
-
-### Instructions
-The file Codebook.md cnotains the procedure and description of how the code works.
 In the first part it just checks if the data is already downloaded and if not, it downloads it.
 
 Then I load the train data into a dataframe called df_features_train.
