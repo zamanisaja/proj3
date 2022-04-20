@@ -59,7 +59,7 @@ df <- df[, c(indices_mean, indices_std)]
 df$Activity <- factor(rbind(df_activity_train, df_activity_test)$Activity)
 df$Subject <- factor(rbind(df_subject_train, df_subject_test)$Subject)
 
-levels(df$activity) <- activities
+levels(df$Activity) <- activities
 
 df <- na.omit(df)
 
