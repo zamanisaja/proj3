@@ -48,8 +48,8 @@ df <- rbind(df_features_train, df_features_test)
 # Extracts only the measurements on the mean and standard deviation for each measurement. 
 
 df_names <- names(df)
-indices_mean <- grep(pattern = "mean\\(\\)", x = df_names)
-indices_std <- grep(pattern = "std\\(\\)", x = df_names)
+indices_mean <- grep(pattern = "mean", x = df_names)
+indices_std <- grep(pattern = "std", x = df_names)
 
 df <- df[, c(indices_mean, indices_std)]
 
